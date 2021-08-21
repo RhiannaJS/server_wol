@@ -29,7 +29,7 @@ router.post("/", validateJWT, async (req, res)=> {
     }catch (err){
         res.status(500).json({error:err});
     }
-    LogModel.create(logEntry)
+    
 });
 
 router.get("/about", (req,res)=>{
@@ -73,10 +73,10 @@ router.get("/:id", validateJWT,  async(req,res)=>{
     }
 });
 
-// HOW DO I TEST THIS IN POSTMAN??? UPDATE LOG
+
 router.put("/:id", validateJWT, async (req, res)=>{
     const {description, definitions, results} = req.body.log;
-    const logId = req.params.entryId;
+    const logId = req.params.id;
     const userId = req.user.id;
 
     const query = {
@@ -101,7 +101,7 @@ router.put("/:id", validateJWT, async (req, res)=>{
 
 // HOW DO I TEST THIS IN POSTMAN?
 router.delete("/:id", validateJWT, async (req, res)=>{
-    const ownerId = req.body.id;
+    const ownerId = req.user.id;
     const logId = req.params.id;
 
     try{
